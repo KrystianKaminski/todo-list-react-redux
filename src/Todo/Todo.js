@@ -2,6 +2,7 @@ import React from 'react'
 
 import AppBar from 'material-ui/AppBar'
 import Paper from 'material-ui/Paper'
+import AddTask from './AddTask';
 
 const style = {
     paper: {
@@ -29,7 +30,8 @@ const Todo = (props) => (
             >
                 What have you planned for today?
             </h1>
-
+            <AddTask
+            />
         </Paper>
     </div>
 )

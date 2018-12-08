@@ -44,9 +44,11 @@ class Todo extends React.Component {
         )
     })
 
-    onDeleteTaskHandler = (e) => {
+    onDeleteTaskHandler = (e, taskKey) => {
         e.stopPropagation()
-        alert('deleted')
+        this.setState({
+            tasks: this.state.tasks.filter(task => task.key !== taskKey)
+        })
     }
     addTask = () => this.setState({
         tasks: this.state.tasks.concat(this.createNewTask(this.state.currentTask)),

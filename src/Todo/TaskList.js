@@ -9,7 +9,8 @@ const style = {
         marginTop: 30
     },
     item: {
-        textDecoration: 'line-through'
+        textDecoration: 'line-through',
+        color: '#7f8c8d'
     }
 }
 
@@ -30,7 +31,7 @@ const TaskList = (props) => (
                     rightIcon={
                         <div>
                             <DeleteIcon
-                                onClick={props.onDeleteHandler}
+                                onClick={(e) => props.onDeleteHandler(e, task.key)}
                             />
                         </div>
                     }

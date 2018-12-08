@@ -19,27 +19,38 @@ const TaskList = (props) => (
         style={style.container}
     >
         {props.tasks &&
-            props.tasks.map ?
-            props.tasks.map(task => (
-                <ListItem
-                    style={task.isCompleted ? style.item : {
-                        textDecoration: 'none'
-                    }}
-                    onClick={() => props.completed(task.key)}
-                    key={task.key}
-                    primaryText={task.todo}
-                    rightIcon={
-                        <div>
-                            <DeleteIcon
-                                onClick={(e) => props.onDeleteHandler(e, task.key)}
-                            />
-                        </div>
-                    }
-                />
-            ))
-            : <ListItem
-                primaryText="Just add something"
-            />
+            props.tasks.map &&
+            props.tasks
+                .filter(task => (
+                    task.todo
+                        .toLowerCase()
+                        .replace(/\s/g, '')
+                        .includes(
+                            props.filterTask
+                                .toLowerCase()
+                                .replace(/\s/g, '')
+                        )
+                )
+                )
+
+
+                .map(task => (
+                    <ListItem
+                        style={task.isCompleted ? style.item : {
+                            textDecoration: 'none'
+                        }}
+                        onClick={() => props.completed(task.key)}
+                        key={task.key}
+                        primaryText={task.todo}
+                        rightIcon={
+                            <div>
+                                <DeleteIcon
+                                    onClick={(e) => props.onDeleteHandler(e, task.key)}
+                                />
+                            </div>
+                        }
+                    />
+                ))
         }
     </List>
 )

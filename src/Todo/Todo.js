@@ -25,11 +25,17 @@ class Todo extends React.Component {
         currentTask: ''
     }
 
-    onChangeHandler = e => this.setState({ currentTask: e.target.value })
+    onNewTaskChangeHandler = e => this.setState({ currentTask: e.target.value })
 
-    onClickHandler = () => this.setState({
-        tasks: this.state.tasks.concat(this.state.currentTask),
+    addTask = () => this.setState({
+        tasks: this.state.tasks.concat(this.createNewTask(this.state.currentTask)),
         currentTask: ''
+    })
+
+    createNewTask = text => ({
+        todo: text,
+        isCompleted: false,
+        key: Date.now()
     })
 
     render() {
@@ -47,8 +53,9 @@ class Todo extends React.Component {
                         What have you planned for today?
                 </h1>
                     <AddTask
-                        onChangeHandler={this.onChangeHandler}
-                        onClickHandler={this.onClickHandler}
+                        currentValue={this.state.currentTask}
+                        onNewTaskChangeHandler={this.onNewTaskChangeHandler}
+                        onClickHandler={this.addTask}
                     />
                     <TaskList />
                 </Paper>

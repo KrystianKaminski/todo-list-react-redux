@@ -22,7 +22,8 @@ const AddTask = (props) => (
     >
 
         <TextField
-            onChange={props.onChangeHandler}
+            onChange={props.onNewTaskChangeHandler}
+            value={props.currentValue}
         />
         <RaisedButton
             label="Add"

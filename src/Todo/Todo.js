@@ -21,12 +21,23 @@ const style = {
 class Todo extends React.Component {
 
     state = {
-        tasks: [],
+        tasks: [
+            {
+                todo: 'Las',
+                isCompleted: false,
+                key: 123
+            }
+        ],
         currentTask: ''
     }
 
     onNewTaskChangeHandler = e => this.setState({ currentTask: e.target.value })
 
+    onIsCompletedTaskChangeHandler = () => alert('clicked')
+    onDeleteTaskHandler = (e) => {
+        e.stopPropagation()
+        alert('deleted')
+    }
     addTask = () => this.setState({
         tasks: this.state.tasks.concat(this.createNewTask(this.state.currentTask)),
         currentTask: ''
@@ -59,6 +70,8 @@ class Todo extends React.Component {
                     />
                     <TaskList
                         tasks={this.state.tasks}
+                        onIsCompletedTaskChangeHandler={this.onIsCompletedTaskChangeHandler}
+                        onDeleteHandler={this.onDeleteTaskHandler}
                     />
                 </Paper>
             </div>

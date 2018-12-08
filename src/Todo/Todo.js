@@ -18,24 +18,44 @@ const style = {
     }
 }
 
-const Todo = (props) => (
-    <div>
-        <AppBar
-            title="Todo List"
-        />
-        <Paper
-            style={style.paper}
-        >
-            <h1
-                style={style.header}
-            >
-                What have you planned for today?
-            </h1>
-            <AddTask
-            />
-            <TaskList />
-        </Paper>
-    </div>
-)
+class Todo extends React.Component {
+
+    state = {
+        tasks: [],
+        currentTask: ''
+    }
+
+    onChangeHandler = e => this.setState({ currentTask: e.target.value })
+
+    onClickHandler = () => this.setState({
+        tasks: this.state.tasks.concat(this.state.currentTask),
+        currentTask: ''
+    })
+
+    render() {
+        return (
+            <div>
+                <AppBar
+                    title="Todo List"
+                />
+                <Paper
+                    style={style.paper}
+                >
+                    <h1
+                        style={style.header}
+                    >
+                        What have you planned for today?
+                </h1>
+                    <AddTask
+                        onChangeHandler={this.onChangeHandler}
+                        onClickHandler={this.onClickHandler}
+                    />
+                    <TaskList />
+                </Paper>
+            </div>
+
+        )
+    }
+}
 
 export default Todo

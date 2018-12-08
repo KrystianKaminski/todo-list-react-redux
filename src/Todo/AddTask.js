@@ -21,11 +21,14 @@ const AddTask = (props) => (
         style={style.container}
     >
 
-        <TextField />
+        <TextField
+            onChange={props.onChangeHandler}
+        />
         <RaisedButton
             label="Add"
             primary
             style={style.button}
+            onClick={props.onClickHandler}
         />
     </div>
 )

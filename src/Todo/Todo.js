@@ -29,10 +29,17 @@ class Todo extends React.Component {
                 key: '123'
             }
         ],
-        currentTask: ''
+        currentTask: '',
+        filterTask: ''
     }
 
     onNewTaskChangeHandler = e => this.setState({ currentTask: e.target.value })
+
+    onSearchTaskChangeHandler = e => this.setState({ filterTask: e.target.value })
+
+    filterTaskByText = () => this.setState({
+        tasks: ['sortuje']
+    })
 
     onIsCompletedTaskChangeHandler = taskKey => this.setState({
         tasks: this.state.tasks.map(task =>
@@ -82,7 +89,8 @@ class Todo extends React.Component {
                         onClickHandler={this.addTask}
                     />
                     <Search
-                        searchByText={() => { }}
+                        onSearchTaskChangeHandler={this.onSearchTaskChangeHandler}
+                        tasks={this.filterTaskByText}
                     />
 
                     <TaskList

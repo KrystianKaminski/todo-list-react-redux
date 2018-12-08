@@ -32,11 +32,13 @@ const Search = props => (
     >
         <TextField
             placeholder="Search tasks..."
+            onChange={props.onSearchTaskChangeHandler}
         />
         <RaisedButton
             label="Search"
             primary
             style={style.button}
+            onClick={props.tasks}
         />
         <div
             style={style.buttonContainer}

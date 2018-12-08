@@ -1,10 +1,9 @@
 import React from 'react';
+import Todo from './Todo/Todo';
 
 
 const App = () => (
-  <div>
-    Hello!
-  </div>
+  <Todo />
 )
 
 export default App;

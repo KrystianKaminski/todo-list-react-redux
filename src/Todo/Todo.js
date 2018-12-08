@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar'
 import Paper from 'material-ui/Paper'
 import AddTask from './AddTask';
 import TaskList from './TaskList';
+import Search from './Search'
 
 const style = {
     paper: {
@@ -80,6 +81,10 @@ class Todo extends React.Component {
                         onNewTaskChangeHandler={this.onNewTaskChangeHandler}
                         onClickHandler={this.addTask}
                     />
+                    <Search
+                        searchByText={() => { }}
+                    />
+
                     <TaskList
                         tasks={this.state.tasks}
                         completed={this.onIsCompletedTaskChangeHandler}

@@ -25,7 +25,7 @@ class Todo extends React.Component {
             {
                 todo: 'Las',
                 isCompleted: false,
-                key: 123
+                key: '123'
             }
         ],
         currentTask: ''
@@ -33,7 +33,17 @@ class Todo extends React.Component {
 
     onNewTaskChangeHandler = e => this.setState({ currentTask: e.target.value })
 
-    onIsCompletedTaskChangeHandler = () => alert('clicked')
+    onIsCompletedTaskChangeHandler = taskKey => this.setState({
+        tasks: this.state.tasks.map(task =>
+            task.key === taskKey ?
+                {
+                    ...task,
+                    isCompleted: !task.isCompleted
+                }
+                : task
+        )
+    })
+
     onDeleteTaskHandler = (e) => {
         e.stopPropagation()
         alert('deleted')
@@ -70,7 +80,7 @@ class Todo extends React.Component {
                     />
                     <TaskList
                         tasks={this.state.tasks}
-                        onIsCompletedTaskChangeHandler={this.onIsCompletedTaskChangeHandler}
+                        completed={this.onIsCompletedTaskChangeHandler}
                         onDeleteHandler={this.onDeleteTaskHandler}
                     />
                 </Paper>

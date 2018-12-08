@@ -8,6 +8,9 @@ const style = {
     container: {
         marginTop: 30
     },
+    item: {
+        textDecoration: 'line-through'
+    }
 }
 
 const TaskList = (props) => (
@@ -18,7 +21,11 @@ const TaskList = (props) => (
             props.tasks.map ?
             props.tasks.map(task => (
                 <ListItem
-                    onClick={props.onIsCompletedTaskChangeHandler}
+                    style={task.isCompleted ? style.item : {
+                        textDecoration: 'none'
+                    }}
+                    onClick={() => props.completed(task.key)}
+                    key={task.key}
                     primaryText={task.todo}
                     rightIcon={
                         <div>

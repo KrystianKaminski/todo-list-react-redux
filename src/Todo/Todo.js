@@ -57,7 +57,9 @@ class Todo extends React.Component {
                         onNewTaskChangeHandler={this.onNewTaskChangeHandler}
                         onClickHandler={this.addTask}
                     />
-                    <TaskList />
+                    <TaskList
+                        tasks={this.state.tasks}
+                    />
                 </Paper>
             </div>
 

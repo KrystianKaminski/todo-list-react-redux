@@ -12,9 +12,17 @@ const TaskList = (props) => (
     <List
         style={style.container}
     >
-        <ListItem
-            primaryText="Item"
-        />
+        {props.tasks &&
+            props.tasks.map ?
+            props.tasks.map(task => (
+                <ListItem
+                    primaryText={task.todo}
+                />
+            ))
+            : <ListItem
+                primaryText="Just add something"
+            />
+        }
     </List>
 )
 

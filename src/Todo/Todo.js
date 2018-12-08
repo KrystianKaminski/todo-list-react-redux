@@ -3,6 +3,7 @@ import React from 'react'
 import AppBar from 'material-ui/AppBar'
 import Paper from 'material-ui/Paper'
 import AddTask from './AddTask';
+import TaskList from './TaskList';
 
 const style = {
     paper: {
@@ -32,6 +33,7 @@ const Todo = (props) => (
             </h1>
             <AddTask
             />
+            <TaskList />
         </Paper>
     </div>
 )

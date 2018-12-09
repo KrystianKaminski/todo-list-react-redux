@@ -3,6 +3,7 @@ const SEARCH_TASK = 'todo/SEARCH_TASK'
 const TASK_ALL = 'todo/TASK_ALL'
 const TASK_DONE = 'todo/TASK_DONE'
 const TASK_UNDONE = 'todo/TASK_UNDONE'
+const IS_COMPLETED_TOGGLE = 'todo/IS_COMPLETED_TOGGLE'
 
 export const onNewTaskChangeHandler = value => ({
     type: NEW_TASK,
@@ -24,6 +25,11 @@ export const onDoneTasksFilter = () => ({
 
 export const onUndoneTasksFilter = () => ({
     type: TASK_UNDONE
+})
+
+export const onIsCompletedTaskChangeHandler = taskKey => ({
+    type: IS_COMPLETED_TOGGLE,
+    taskKey
 })
 
 const INITIAL_STATE = {
@@ -67,7 +73,18 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 filterMethod: 'UNDONE'
             }
-
+        case IS_COMPLETED_TOGGLE:
+            return {
+                ...state,
+                tasks: state.tasks.map(task =>
+                    task.key === action.taskKey ?
+                        {
+                            ...task,
+                            isCompleted: !task.isCompleted
+                        }
+                        : task
+                )
+            }
         default:
             return state
     }

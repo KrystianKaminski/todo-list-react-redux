@@ -16,7 +16,7 @@ export const addTaskToDbAsyncAction = () => (dispatch, getState) => {
     const uuid = getState().auth.user.uid
     database.ref(`users/${uuid}/tasks`).push({
         todo: newTask,
-        completed: false
+        isCompleted: false
     })
     dispatch(cleanInput())
 }
@@ -26,15 +26,27 @@ export const getTasksFromDbAsyncAction = () => (dispatch, getState) => {
     database.ref(`users/${uuid}/tasks`).on(
         'value',
         snapshot => {
-            const array = Object.entries(
-                snapshot.val())
-            const tasksList = array.map(entry => ({
-                ...entry[1],
-                key: entry[0]
-            }))
-            dispatch(showTasksAction(tasksList))
+            if (snapshot.val()) {
+
+                const array = Object.entries(
+                    snapshot.val())
+                const tasksList = array.map(entry => ({
+                    ...entry[1],
+                    key: entry[0]
+                }))
+                dispatch(showTasksAction(tasksList))
+            } else {
+                dispatch(showTasksAction(null))
+            }
         }
     )
+}
+
+export const toggleTaskAsyncAction = task => (dispatch, getState) => {
+    const uuid = getState().auth.user.uid
+    database.ref(`users/${uuid}/tasks/${task.key}`).update({
+        isCompleted: !task.isCompleted
+    })
 }
 
 export const onNewTaskChangeHandler = value => ({

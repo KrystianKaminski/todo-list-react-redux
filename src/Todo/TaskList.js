@@ -53,7 +53,7 @@ const TaskList = (props) => (
                         style={task.isCompleted ? style.item : {
                             textDecoration: 'none'
                         }}
-                        onClick={() => props.completed(task.key)}
+                        onClick={() => props.completed(task)}
                         key={task.key}
                         primaryText={task.todo}
                         rightIcon={

@@ -5,6 +5,7 @@ const TASK_DONE = 'todo/TASK_DONE'
 const TASK_UNDONE = 'todo/TASK_UNDONE'
 const IS_COMPLETED_TOGGLE = 'todo/IS_COMPLETED_TOGGLE'
 const DELETE_TASK = 'todo/DELETE_TASK'
+const ADD_TASK = 'todo/ADD_TASK'
 
 export const onNewTaskChangeHandler = value => ({
     type: NEW_TASK,
@@ -37,6 +38,17 @@ export const onDeleteTaskHandler = (e, taskKey) => ({
     type: DELETE_TASK,
     e: e.stopPropagation(),
     taskKey
+})
+
+export const addTask = () => ({
+    type: ADD_TASK
+})
+
+
+const createNewTask = text => ({
+    todo: text,
+    isCompleted: false,
+    key: Date.now()
 })
 
 const INITIAL_STATE = {
@@ -106,6 +118,12 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 tasks: state.tasks.filter(task => task.key !== action.taskKey)
+            }
+        case ADD_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.concat(createNewTask(state.currentTask)),
+                currentTask: ''
             }
         default:
             return state

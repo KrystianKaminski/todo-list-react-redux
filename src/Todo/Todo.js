@@ -15,7 +15,8 @@ import {
     onDoneTasksFilter,
     onUndoneTasksFilter,
     onIsCompletedTaskChangeHandler,
-    onDeleteTaskHandler
+    onDeleteTaskHandler,
+    addTask
 } from '../state/todo'
 
 const style = {
@@ -61,7 +62,7 @@ class Todo extends React.Component {
                     <AddTask
                         currentValue={this.props._currentTask}
                         onNewTaskChangeHandler={this.props._onNewTaskChangeHandler}
-                        onClickHandler={this.addTask}
+                        onClickHandler={this.props._addTask}
                     />
                     <Search
                         filterTask={this.props._filterTask}
@@ -99,7 +100,8 @@ const dispatchToProps = dispatch => ({
     _onDoneTasksFilter: () => dispatch(onDoneTasksFilter()),
     _onUndoneTasksFilter: () => dispatch(onUndoneTasksFilter()),
     _onIsCompletedTaskChangeHandler: taskKey => dispatch(onIsCompletedTaskChangeHandler(taskKey)),
-    _onDeleteTaskHandler: (e, taskKey) => dispatch(onDeleteTaskHandler(e, taskKey))
+    _onDeleteTaskHandler: (e, taskKey) => dispatch(onDeleteTaskHandler(e, taskKey)),
+    _addTask: () => dispatch(addTask())
 })
 
 export default connect(

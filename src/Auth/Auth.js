@@ -6,9 +6,6 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 
 import Forms from './Forms'
 
-
-
-
 class Auth extends React.Component {
 
     state = {
@@ -21,7 +18,6 @@ class Auth extends React.Component {
 
     componentDidMount() {
         auth.onAuthStateChanged(
-            // user is an obj with user data or null when not loggen in
             user => {
                 if (user) {
                     this.setState({ isUserLoggedIn: true })

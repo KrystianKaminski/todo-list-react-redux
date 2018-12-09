@@ -6,6 +6,8 @@ import AddTask from './AddTask';
 import TaskList from './TaskList';
 import Search from './Search'
 
+import { connect } from 'react-redux'
+
 const style = {
     paper: {
         margin: 30,
@@ -21,18 +23,6 @@ const style = {
 
 class Todo extends React.Component {
 
-    state = {
-        tasks: [
-            {
-                todo: 'Las',
-                isCompleted: false,
-                key: '123'
-            }
-        ],
-        currentTask: '',
-        filterTask: '',
-        filterMethod: 'ALL'
-    }
 
     onNewTaskChangeHandler = e => this.setState({ currentTask: e.target.value })
 
@@ -93,12 +83,12 @@ class Todo extends React.Component {
                         What have you planned for today?
                 </h1>
                     <AddTask
-                        currentValue={this.state.currentTask}
+                        currentValue={this.props._currentTask}
                         onNewTaskChangeHandler={this.onNewTaskChangeHandler}
                         onClickHandler={this.addTask}
                     />
                     <Search
-                        filterTask={this.state.filterTask}
+                        filterTask={this.props._filterTask}
                         onSearchTaskChangeHandler={this.onSearchTaskChangeHandler}
                         allTasks={this.onAllTasksFilter}
                         doneTasks={this.onDoneTasksFilter}
@@ -106,11 +96,11 @@ class Todo extends React.Component {
                     />
 
                     <TaskList
-                        tasks={this.state.tasks}
-                        filterTask={this.state.filterTask}
+                        tasks={this.props._tasks}
+                        filterTask={this.props._filterTask}
                         completed={this.onIsCompletedTaskChangeHandler}
                         onDeleteHandler={this.onDeleteTaskHandler}
-                        chosenFilter={this.state.filterMethod}
+                        chosenFilter={this.props._filterMethod}
                     />
                 </Paper>
             </div>
@@ -119,4 +109,17 @@ class Todo extends React.Component {
     }
 }
 
-export default Todo
+const mapStateToProps = state => ({
+    _tasks: state.todo.tasks,
+    _currentTask: state.todo.currentTask,
+    _filterTask: state.todo.filterTask,
+    _filterMethod: state.todo.filterMethod
+})
+
+const dispatchToProps = dispatch => ({
+
+})
+
+export default connect(
+    mapStateToProps
+)(Todo)

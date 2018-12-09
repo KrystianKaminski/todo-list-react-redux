@@ -1,10 +1,8 @@
 import React from 'react'
-
-import { auth, googleProvider } from '../firebaseConfig'
-
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-
 import Forms from './Forms'
+
+import { connect } from 'react-redux'
 
 class Auth extends React.Component {
 
@@ -87,4 +85,6 @@ class Auth extends React.Component {
 }
 
 
-export default Auth
+export default connect(
+
+)(Auth)

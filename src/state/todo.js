@@ -4,6 +4,7 @@ const TASK_ALL = 'todo/TASK_ALL'
 const TASK_DONE = 'todo/TASK_DONE'
 const TASK_UNDONE = 'todo/TASK_UNDONE'
 const IS_COMPLETED_TOGGLE = 'todo/IS_COMPLETED_TOGGLE'
+const DELETE_TASK = 'todo/DELETE_TASK'
 
 export const onNewTaskChangeHandler = value => ({
     type: NEW_TASK,
@@ -32,12 +33,28 @@ export const onIsCompletedTaskChangeHandler = taskKey => ({
     taskKey
 })
 
+export const onDeleteTaskHandler = (e, taskKey) => ({
+    type: DELETE_TASK,
+    e: e.stopPropagation(),
+    taskKey
+})
+
 const INITIAL_STATE = {
     tasks: [
         {
             todo: 'Las',
             isCompleted: false,
-            key: '123'
+            key: '1232'
+        },
+        {
+            todo: 'Las',
+            isCompleted: false,
+            key: '12113'
+        },
+        {
+            todo: 'Las',
+            isCompleted: false,
+            key: '122123'
         }
     ],
     currentTask: '',
@@ -84,6 +101,11 @@ export default (state = INITIAL_STATE, action) => {
                         }
                         : task
                 )
+            }
+        case DELETE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.filter(task => task.key !== action.taskKey)
             }
         default:
             return state

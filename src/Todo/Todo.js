@@ -14,7 +14,8 @@ import {
     onAllTasksFilter,
     onDoneTasksFilter,
     onUndoneTasksFilter,
-    onIsCompletedTaskChangeHandler
+    onIsCompletedTaskChangeHandler,
+    onDeleteTaskHandler
 } from '../state/todo'
 
 const style = {
@@ -32,13 +33,6 @@ const style = {
 
 class Todo extends React.Component {
 
-
-    onDeleteTaskHandler = (e, taskKey) => {
-        e.stopPropagation()
-        this.setState({
-            tasks: this.state.tasks.filter(task => task.key !== taskKey)
-        })
-    }
     addTask = () => this.setState({
         tasks: this.state.tasks.concat(this.createNewTask(this.state.currentTask)),
         currentTask: ''
@@ -81,7 +75,7 @@ class Todo extends React.Component {
                         tasks={this.props._tasks}
                         filterTask={this.props._filterTask}
                         completed={this.props._onIsCompletedTaskChangeHandler}
-                        onDeleteHandler={this.onDeleteTaskHandler}
+                        onDeleteHandler={this.props._onDeleteTaskHandler}
                         chosenFilter={this.props._filterMethod}
                     />
                 </Paper>
@@ -104,7 +98,8 @@ const dispatchToProps = dispatch => ({
     _onAllTasksFilter: () => dispatch(onAllTasksFilter()),
     _onDoneTasksFilter: () => dispatch(onDoneTasksFilter()),
     _onUndoneTasksFilter: () => dispatch(onUndoneTasksFilter()),
-    _onIsCompletedTaskChangeHandler: taskKey => dispatch(onIsCompletedTaskChangeHandler(taskKey))
+    _onIsCompletedTaskChangeHandler: taskKey => dispatch(onIsCompletedTaskChangeHandler(taskKey)),
+    _onDeleteTaskHandler: (e, taskKey) => dispatch(onDeleteTaskHandler(e, taskKey))
 })
 
 export default connect(

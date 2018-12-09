@@ -21,6 +21,20 @@ const TaskList = (props) => (
         {props.tasks &&
             props.tasks.map &&
             props.tasks
+
+                .filter(task => {
+                    switch (props.chosenFilter) {
+                        case 'ALL':
+                            return true
+                        case 'DONE':
+                            return task.isCompleted
+                        case 'UNDONE':
+                            return !task.isCompleted
+                        default:
+                            return true
+                    }
+                })
+
                 .filter(task => (
                     task.todo
                         .toLowerCase()

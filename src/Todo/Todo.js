@@ -30,12 +30,25 @@ class Todo extends React.Component {
             }
         ],
         currentTask: '',
-        filterTask: ''
+        filterTask: '',
+        filterMethod: 'ALL'
     }
 
     onNewTaskChangeHandler = e => this.setState({ currentTask: e.target.value })
 
     onSearchTaskChangeHandler = e => this.setState({ filterTask: e.target.value })
+
+    onAllTasksFilter = () => this.setState({
+        filterMethod: 'ALL'
+    })
+
+    onDoneTasksFilter = () => this.setState({
+        filterMethod: 'DONE'
+    })
+
+    onUndoneTasksFilter = () => this.setState({
+        filterMethod: 'UNDONE'
+    })
 
     onIsCompletedTaskChangeHandler = taskKey => this.setState({
         tasks: this.state.tasks.map(task =>
@@ -87,6 +100,9 @@ class Todo extends React.Component {
                     <Search
                         filterTask={this.state.filterTask}
                         onSearchTaskChangeHandler={this.onSearchTaskChangeHandler}
+                        allTasks={this.onAllTasksFilter}
+                        doneTasks={this.onDoneTasksFilter}
+                        undoneTasks={this.onUndoneTasksFilter}
                     />
 
                     <TaskList
@@ -94,6 +110,7 @@ class Todo extends React.Component {
                         filterTask={this.state.filterTask}
                         completed={this.onIsCompletedTaskChangeHandler}
                         onDeleteHandler={this.onDeleteTaskHandler}
+                        chosenFilter={this.state.filterMethod}
                     />
                 </Paper>
             </div>

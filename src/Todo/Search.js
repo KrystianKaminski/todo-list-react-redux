@@ -46,16 +46,19 @@ const Search = props => (
                 label="All"
                 primary
                 style={style.button}
+                onClick={props.allTasks}
             />
             <RaisedButton
                 label="Done"
                 primary
                 style={style.button}
+                onClick={props.doneTasks}
             />
             <RaisedButton
                 label="Undone"
                 primary
                 style={style.button}
+                onClick={props.undoneTasks}
             />
         </div>
     </div>

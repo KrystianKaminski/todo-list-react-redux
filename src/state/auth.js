@@ -32,6 +32,35 @@ export const passwordChangeAction = newValue => ({
     newValue
 })
 
+export const initAuthChangeListeningAsyncAction = () => (dispatch, getState) => {
+    auth.onAuthStateChanged(
+        user => {
+            if (user) {
+                dispatch(logInAction(user))
+            } else {
+                dispatch(logOutAction())
+            }
+        }
+    )
+}
+
+export const emailHandler = value => ({
+    type: EMAIL_CHANGE,
+    value
+})
+
+export const passwordHandler = value => ({
+    type: PASSWORD_CHANGE,
+    value
+})
+
+export const logInAsyncAction = () => (dispatch, getState) => {
+    auth.signInWithEmailAndPassword(email, password)
+        .catch(error => {
+            alert('Something is wrong! Check console for error details')
+        })
+}
+
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
 

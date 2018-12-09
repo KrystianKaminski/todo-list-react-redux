@@ -4,6 +4,12 @@ import Forms from './Forms'
 
 import { connect } from 'react-redux'
 
+import {
+    emailHandler,
+    passwordHandler,
+    logInAsyncAction,
+} from '../state/auth'
+
 class Auth extends React.Component {
 
     state = {
@@ -15,32 +21,7 @@ class Auth extends React.Component {
 
 
     componentDidMount() {
-        auth.onAuthStateChanged(
-            user => {
-                if (user) {
-                    this.setState({ isUserLoggedIn: true })
-                } else {
-                    this.setState({ isUserLoggedIn: false })
-                }
-            }
-        )
-    }
-
-
-    emailHandler = e => {
-        this.setState({ email: e.target.value })
-    }
-
-    passwordHandler = e => {
-        this.setState({ password: e.target.value })
-    }
-
-    onLogInClick = () => {
-        auth.signInWithEmailAndPassword(this.state.email, this.state.password)
-            .catch(error => {
-                alert('Something is wrong! Check console for error details')
-                console.log(error)
-            })
+        this.props._initAuthChangeListeningAsyncAction()
     }
 
     onLogInByGoogleClick = () => {
@@ -73,9 +54,9 @@ class Auth extends React.Component {
                 </div>
                 :
                 <Forms
-                    emailHandler={this.emailHandler}
-                    passwordHandler={this.passwordHandler}
-                    onLogIn={this.onLogInClick}
+                    emailHandler={this.props._emailHandler}
+                    passwordHandler={this.props._passwordHandler}
+                    onLogIn={this.props._logInAsyncAction}
                     onLogGoogle={this.onLogInByGoogleClick}
                     emailValue={this.state.email}
                     passwordValue={this.state.password}
@@ -84,7 +65,21 @@ class Auth extends React.Component {
     }
 }
 
+const mapStateToProps = state => ({
+    _isUserLoggedIn: state.auth.isUserLoggedIn,
+    _email: state.auth.email,
+    _password: state.auth.password
+})
+
+const dispatchToProps = dispatch => ({
+    _initAuthChangeListeningAsyncAction: () => dispatch(initAuthChangeListeningAsyncAction()),
+    _emailHandler: e => dispatch(emailHandler(e.target.value)),
+    _passwordHandler: e => dispatch(passwordHandler(e.target.value)),
+    _logInAsyncAction: () => dispatch(logInAsyncAction())
+})
+
 
 export default connect(
-
+    mapStateToProps,
+    dispatchToProps
 )(Auth)

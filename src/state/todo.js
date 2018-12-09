@@ -1,6 +1,8 @@
 const NEW_TASK = 'todo/NEW_TASK'
 const SEARCH_TASK = 'todo/SEARCH_TASK'
 const TASK_ALL = 'todo/TASK_ALL'
+const TASK_DONE = 'todo/TASK_DONE'
+const TASK_UNDONE = 'todo/TASK_UNDONE'
 
 export const onNewTaskChangeHandler = value => ({
     type: NEW_TASK,
@@ -14,6 +16,14 @@ export const onSearchTaskChangeHandler = value => ({
 
 export const onAllTasksFilter = () => ({
     type: TASK_ALL
+})
+
+export const onDoneTasksFilter = () => ({
+    type: TASK_DONE
+})
+
+export const onUndoneTasksFilter = () => ({
+    type: TASK_UNDONE
 })
 
 const INITIAL_STATE = {
@@ -46,6 +56,16 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 filterMethod: 'ALL'
+            }
+        case TASK_DONE:
+            return {
+                ...state,
+                filterMethod: 'DONE'
+            }
+        case TASK_UNDONE:
+            return {
+                ...state,
+                filterMethod: 'UNDONE'
             }
 
         default:

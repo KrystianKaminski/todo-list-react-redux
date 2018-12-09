@@ -11,7 +11,9 @@ import { connect } from 'react-redux'
 import {
     onNewTaskChangeHandler,
     onSearchTaskChangeHandler,
-    onAllTasksFilter
+    onAllTasksFilter,
+    onDoneTasksFilter,
+    onUndoneTasksFilter
 } from '../state/todo'
 
 const style = {
@@ -29,15 +31,6 @@ const style = {
 
 class Todo extends React.Component {
 
-
-
-    onDoneTasksFilter = () => this.setState({
-        filterMethod: 'DONE'
-    })
-
-    onUndoneTasksFilter = () => this.setState({
-        filterMethod: 'UNDONE'
-    })
 
     onIsCompletedTaskChangeHandler = taskKey => this.setState({
         tasks: this.state.tasks.map(task =>
@@ -90,8 +83,8 @@ class Todo extends React.Component {
                         filterTask={this.props._filterTask}
                         onSearchTaskChangeHandler={this.props._onSearchTaskChangeHandler}
                         allTasks={this.props._onAllTasksFilter}
-                        doneTasks={this.onDoneTasksFilter}
-                        undoneTasks={this.onUndoneTasksFilter}
+                        doneTasks={this.props._onDoneTasksFilter}
+                        undoneTasks={this.props._onUndoneTasksFilter}
                     />
 
                     <TaskList
@@ -118,7 +111,9 @@ const mapStateToProps = state => ({
 const dispatchToProps = dispatch => ({
     _onNewTaskChangeHandler: e => dispatch(onNewTaskChangeHandler(e.target.value)),
     _onSearchTaskChangeHandler: e => dispatch(onSearchTaskChangeHandler(e.target.value)),
-    _onAllTasksFilter: () => dispatch(onAllTasksFilter())
+    _onAllTasksFilter: () => dispatch(onAllTasksFilter()),
+    _onDoneTasksFilter: () => dispatch(onDoneTasksFilter()),
+    _onUndoneTasksFilter: () => dispatch(onUndoneTasksFilter())
 })
 
 export default connect(

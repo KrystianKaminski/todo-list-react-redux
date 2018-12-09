@@ -16,6 +16,8 @@ const Forms = (props) => (
             style={style}
         >
             <div>
+                <p>Login: example@example.com</p>
+                <p>Password: 123456</p>
                 <TextField
                     name="email"
                     type="email"

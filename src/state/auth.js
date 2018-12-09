@@ -93,12 +93,12 @@ export default (state = INITIAL_STATE, action) => {
         case EMAIL_CHANGE:
             return {
                 ...state,
-                email: action.newValue
+                email: action.value
             }
         case PASSWORD_CHANGE:
             return {
                 ...state,
-                password: action.newValue
+                password: action.value
             }
         default:
             return state

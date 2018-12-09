@@ -1,10 +1,15 @@
 const NEW_TASK = 'todo/NEW_TASK'
+const SEARCH_TASK = 'todo/SEARCH_TASK'
 
 export const onNewTaskChangeHandler = value => ({
     type: NEW_TASK,
     value
 })
 
+export const onSearchTaskChangeHandler = value => ({
+    type: SEARCH_TASK,
+    value
+})
 const INITIAL_STATE = {
     tasks: [
         {
@@ -25,6 +30,11 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 currentTask: action.value
+            }
+        case SEARCH_TASK:
+            return {
+                ...state,
+                filterTask: action.value
             }
 
         default:

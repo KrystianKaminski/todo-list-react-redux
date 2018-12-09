@@ -16,7 +16,7 @@ import {
     onUndoneTasksFilter,
     onIsCompletedTaskChangeHandler,
     onDeleteTaskHandler,
-    addTask
+    addTaskToDbAsyncAction
 } from '../state/todo'
 
 const style = {
@@ -48,7 +48,7 @@ const Todo = props => (
             <AddTask
                 currentValue={props._currentTask}
                 onNewTaskChangeHandler={props._onNewTaskChangeHandler}
-                onClickHandler={props._addTask}
+                onClickHandler={props._addTaskToDbAsyncAction}
             />
             <Search
                 filterTask={props._filterTask}
@@ -84,7 +84,7 @@ const dispatchToProps = dispatch => ({
     _onUndoneTasksFilter: () => dispatch(onUndoneTasksFilter()),
     _onIsCompletedTaskChangeHandler: taskKey => dispatch(onIsCompletedTaskChangeHandler(taskKey)),
     _onDeleteTaskHandler: (e, taskKey) => dispatch(onDeleteTaskHandler(e, taskKey)),
-    _addTask: () => dispatch(addTask())
+    _addTaskToDbAsyncAction: () => dispatch(addTaskToDbAsyncAction())
 })
 
 export default connect(

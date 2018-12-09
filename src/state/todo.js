@@ -1,3 +1,5 @@
+import { database } from '../firebaseConfig'
+
 const NEW_TASK = 'todo/NEW_TASK'
 const SEARCH_TASK = 'todo/SEARCH_TASK'
 const TASK_ALL = 'todo/TASK_ALL'
@@ -5,7 +7,15 @@ const TASK_DONE = 'todo/TASK_DONE'
 const TASK_UNDONE = 'todo/TASK_UNDONE'
 const IS_COMPLETED_TOGGLE = 'todo/IS_COMPLETED_TOGGLE'
 const DELETE_TASK = 'todo/DELETE_TASK'
-const ADD_TASK = 'todo/ADD_TASK'
+
+export const addTaskToDbAsyncAction = () => (dispatch, getState) => {
+    const newTask = getState().todo.currentTask
+    const uuid = getState().auth.user.uid
+    database.ref(`users/${uuid}/tasks`).push({
+        text: newTask,
+        completed: false
+    })
+}
 
 export const onNewTaskChangeHandler = value => ({
     type: NEW_TASK,
@@ -40,35 +50,8 @@ export const onDeleteTaskHandler = (e, taskKey) => ({
     taskKey
 })
 
-export const addTask = () => ({
-    type: ADD_TASK
-})
-
-
-const createNewTask = text => ({
-    todo: text,
-    isCompleted: false,
-    key: Date.now()
-})
-
 const INITIAL_STATE = {
-    tasks: [
-        {
-            todo: 'Las',
-            isCompleted: false,
-            key: '1232'
-        },
-        {
-            todo: 'Las',
-            isCompleted: false,
-            key: '12113'
-        },
-        {
-            todo: 'Las',
-            isCompleted: false,
-            key: '122123'
-        }
-    ],
+    tasks: [],
     currentTask: '',
     filterTask: '',
     filterMethod: 'ALL'
@@ -118,12 +101,6 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 tasks: state.tasks.filter(task => task.key !== action.taskKey)
-            }
-        case ADD_TASK:
-            return {
-                ...state,
-                tasks: state.tasks.concat(createNewTask(state.currentTask)),
-                currentTask: ''
             }
         default:
             return state

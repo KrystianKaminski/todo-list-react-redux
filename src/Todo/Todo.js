@@ -14,8 +14,7 @@ import {
     onAllTasksFilter,
     onDoneTasksFilter,
     onUndoneTasksFilter,
-    onIsCompletedTaskChangeHandler,
-    onDeleteTaskHandler,
+    deleteTaskAsyncAction,
     addTaskToDbAsyncAction,
     toggleTaskAsyncAction
 } from '../state/todo'
@@ -63,7 +62,7 @@ const Todo = props => (
                 tasks={props._tasks}
                 filterTask={props._filterTask}
                 completed={props._toggleTaskAsyncAction}
-                onDeleteHandler={props._onDeleteTaskHandler}
+                onDeleteHandler={props._deleteTaskAsyncAction}
                 chosenFilter={props._filterMethod}
             />
         </Paper>
@@ -83,8 +82,7 @@ const dispatchToProps = dispatch => ({
     _onAllTasksFilter: () => dispatch(onAllTasksFilter()),
     _onDoneTasksFilter: () => dispatch(onDoneTasksFilter()),
     _onUndoneTasksFilter: () => dispatch(onUndoneTasksFilter()),
-    _onIsCompletedTaskChangeHandler: taskKey => dispatch(onIsCompletedTaskChangeHandler(taskKey)),
-    _onDeleteTaskHandler: (e, taskKey) => dispatch(onDeleteTaskHandler(e, taskKey)),
+    _deleteTaskAsyncAction: (e, taskKey) => dispatch(deleteTaskAsyncAction(e, taskKey)),
     _addTaskToDbAsyncAction: () => dispatch(addTaskToDbAsyncAction()),
     _toggleTaskAsyncAction: (task) => dispatch(toggleTaskAsyncAction(task))
 })

@@ -5,11 +5,9 @@ const SEARCH_TASK = 'todo/SEARCH_TASK'
 const TASK_ALL = 'todo/TASK_ALL'
 const TASK_DONE = 'todo/TASK_DONE'
 const TASK_UNDONE = 'todo/TASK_UNDONE'
-const IS_COMPLETED_TOGGLE = 'todo/IS_COMPLETED_TOGGLE'
 const DELETE_TASK = 'todo/DELETE_TASK'
 const CLEAN_INPUT = 'todo/CLEAN_INPUT'
-const SHOW_TASK = 'todo/SHOW_TASK'
-const ADD_TASK = 'todo/ADD_TASK'
+const SHOW_TASKS = 'todo/SHOW_TASKS'
 
 export const addTaskToDbAsyncAction = () => (dispatch, getState) => {
     const newTask = getState().todo.currentTask
@@ -71,35 +69,21 @@ export const onUndoneTasksFilter = () => ({
     type: TASK_UNDONE
 })
 
-export const onIsCompletedTaskChangeHandler = taskKey => ({
-    type: IS_COMPLETED_TOGGLE,
-    taskKey
-})
-
-export const onDeleteTaskHandler = (e, taskKey) => ({
-    type: DELETE_TASK,
-    e: e.stopPropagation(),
-    taskKey
-})
+export const deleteTaskAsyncAction = (e, key) => (dispatch, getState) => {
+    e.stopPropagation()
+    const uuid = getState().auth.user.uid
+    database.ref(`users/${uuid}/tasks`).child(key).remove()
+}
 
 const cleanInput = () => ({
     type: CLEAN_INPUT
 })
 
 const showTasksAction = tasks => ({
-    type: SHOW_TASK,
+    type: SHOW_TASKS,
     tasks
 })
 
-export const addTask = () => ({
-    type: ADD_TASK
-})
-
-
-const createNewTask = text => ({
-    todo: text,
-    isCompleted: false
-})
 
 const INITIAL_STATE = {
     tasks: [],
@@ -136,35 +120,17 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 filterMethod: 'UNDONE'
             }
-        case IS_COMPLETED_TOGGLE:
-            return {
-                ...state,
-                tasks: state.tasks.map(task =>
-                    task.key === action.taskKey ?
-                        {
-                            ...task,
-                            isCompleted: !task.isCompleted
-                        }
-                        : task
-                )
-            }
         case DELETE_TASK:
             return {
                 ...state,
                 tasks: state.tasks.filter(task => task.key !== action.taskKey)
-            }
-        case ADD_TASK:
-            return {
-                ...state,
-                tasks: state.tasks.concat(createNewTask(state.currentTask)),
-                currentTask: ''
             }
         case CLEAN_INPUT:
             return {
                 ...state,
                 currentTask: ''
             }
-        case SHOW_TASK:
+        case SHOW_TASKS:
             return {
                 ...state,
                 tasks: action.tasks

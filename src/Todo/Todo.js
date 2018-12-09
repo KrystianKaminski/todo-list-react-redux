@@ -16,7 +16,7 @@ import {
     onUndoneTasksFilter,
     onIsCompletedTaskChangeHandler,
     onDeleteTaskHandler,
-    addTaskToDbAsyncAction
+    addTaskToDbAsyncAction,
 } from '../state/todo'
 
 const style = {
@@ -84,7 +84,7 @@ const dispatchToProps = dispatch => ({
     _onUndoneTasksFilter: () => dispatch(onUndoneTasksFilter()),
     _onIsCompletedTaskChangeHandler: taskKey => dispatch(onIsCompletedTaskChangeHandler(taskKey)),
     _onDeleteTaskHandler: (e, taskKey) => dispatch(onDeleteTaskHandler(e, taskKey)),
-    _addTaskToDbAsyncAction: () => dispatch(addTaskToDbAsyncAction())
+    _addTaskToDbAsyncAction: () => dispatch(addTaskToDbAsyncAction()),
 })
 
 export default connect(

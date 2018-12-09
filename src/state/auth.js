@@ -1,9 +1,11 @@
 import { auth, googleProvider } from '../firebaseConfig'
+import { getTasksFromDbAsyncAction } from './todo'
 
 const LOG_IN = 'auth/LOG_IN'
 const LOG_OUT = 'auth/LOG_OUT'
 const EMAIL_CHANGE = 'auth/EMAIL_CHANGE'
 const PASSWORD_CHANGE = 'auth/PASSWORD_CHANGE'
+
 
 const INITIAL_STATE = {
     isUserLoggedIn: false,
@@ -37,6 +39,7 @@ export const initAuthChangeListeningAsyncAction = () => (dispatch, getState) => 
         user => {
             if (user) {
                 dispatch(logInAction(user))
+                dispatch(getTasksFromDbAsyncAction())
             } else {
                 dispatch(logOutAction())
             }

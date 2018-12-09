@@ -7,14 +7,34 @@ const TASK_DONE = 'todo/TASK_DONE'
 const TASK_UNDONE = 'todo/TASK_UNDONE'
 const IS_COMPLETED_TOGGLE = 'todo/IS_COMPLETED_TOGGLE'
 const DELETE_TASK = 'todo/DELETE_TASK'
+const CLEAN_INPUT = 'todo/CLEAN_INPUT'
+const SHOW_TASK = 'todo/SHOW_TASK'
+const ADD_TASK = 'todo/ADD_TASK'
 
 export const addTaskToDbAsyncAction = () => (dispatch, getState) => {
     const newTask = getState().todo.currentTask
     const uuid = getState().auth.user.uid
     database.ref(`users/${uuid}/tasks`).push({
-        text: newTask,
+        todo: newTask,
         completed: false
     })
+    dispatch(cleanInput())
+}
+
+export const getTasksFromDbAsyncAction = () => (dispatch, getState) => {
+    const uuid = getState().auth.user.uid
+    database.ref(`users/${uuid}/tasks`).on(
+        'value',
+        snapshot => {
+            const array = Object.entries(
+                snapshot.val())
+            const tasksList = array.map(entry => ({
+                ...entry[1],
+                key: entry[0]
+            }))
+            dispatch(showTasksAction(tasksList))
+        }
+    )
 }
 
 export const onNewTaskChangeHandler = value => ({
@@ -48,6 +68,25 @@ export const onDeleteTaskHandler = (e, taskKey) => ({
     type: DELETE_TASK,
     e: e.stopPropagation(),
     taskKey
+})
+
+const cleanInput = () => ({
+    type: CLEAN_INPUT
+})
+
+const showTasksAction = tasks => ({
+    type: SHOW_TASK,
+    tasks
+})
+
+export const addTask = () => ({
+    type: ADD_TASK
+})
+
+
+const createNewTask = text => ({
+    todo: text,
+    isCompleted: false
 })
 
 const INITIAL_STATE = {
@@ -101,6 +140,22 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 tasks: state.tasks.filter(task => task.key !== action.taskKey)
+            }
+        case ADD_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.concat(createNewTask(state.currentTask)),
+                currentTask: ''
+            }
+        case CLEAN_INPUT:
+            return {
+                ...state,
+                currentTask: ''
+            }
+        case SHOW_TASK:
+            return {
+                ...state,
+                tasks: action.tasks
             }
         default:
             return state

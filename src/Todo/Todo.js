@@ -10,7 +10,8 @@ import { connect } from 'react-redux'
 
 import {
     onNewTaskChangeHandler,
-    onSearchTaskChangeHandler
+    onSearchTaskChangeHandler,
+    onAllTasksFilter
 } from '../state/todo'
 
 const style = {
@@ -29,10 +30,6 @@ const style = {
 class Todo extends React.Component {
 
 
-
-    onAllTasksFilter = () => this.setState({
-        filterMethod: 'ALL'
-    })
 
     onDoneTasksFilter = () => this.setState({
         filterMethod: 'DONE'
@@ -92,7 +89,7 @@ class Todo extends React.Component {
                     <Search
                         filterTask={this.props._filterTask}
                         onSearchTaskChangeHandler={this.props._onSearchTaskChangeHandler}
-                        allTasks={this.onAllTasksFilter}
+                        allTasks={this.props._onAllTasksFilter}
                         doneTasks={this.onDoneTasksFilter}
                         undoneTasks={this.onUndoneTasksFilter}
                     />
@@ -120,7 +117,8 @@ const mapStateToProps = state => ({
 
 const dispatchToProps = dispatch => ({
     _onNewTaskChangeHandler: e => dispatch(onNewTaskChangeHandler(e.target.value)),
-    _onSearchTaskChangeHandler: e => dispatch(onSearchTaskChangeHandler(e.target.value))
+    _onSearchTaskChangeHandler: e => dispatch(onSearchTaskChangeHandler(e.target.value)),
+    _onAllTasksFilter: () => dispatch(onAllTasksFilter())
 })
 
 export default connect(

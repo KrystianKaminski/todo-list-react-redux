@@ -32,59 +32,42 @@ const style = {
     }
 }
 
-class Todo extends React.Component {
-
-    addTask = () => this.setState({
-        tasks: this.state.tasks.concat(this.createNewTask(this.state.currentTask)),
-        currentTask: ''
-    })
-
-    createNewTask = text => ({
-        todo: text,
-        isCompleted: false,
-        key: Date.now()
-    })
-
-    render() {
-        return (
-            <div>
-                <AppBar
-                    title="Todo List"
-                />
-                <Paper
-                    style={style.paper}
-                >
-                    <h1
-                        style={style.header}
-                    >
-                        What have you planned for today?
+const Todo = props => (
+    <div>
+        <AppBar
+            title="Todo List"
+        />
+        <Paper
+            style={style.paper}
+        >
+            <h1
+                style={style.header}
+            >
+                What have you planned for today?
                 </h1>
-                    <AddTask
-                        currentValue={this.props._currentTask}
-                        onNewTaskChangeHandler={this.props._onNewTaskChangeHandler}
-                        onClickHandler={this.props._addTask}
-                    />
-                    <Search
-                        filterTask={this.props._filterTask}
-                        onSearchTaskChangeHandler={this.props._onSearchTaskChangeHandler}
-                        allTasks={this.props._onAllTasksFilter}
-                        doneTasks={this.props._onDoneTasksFilter}
-                        undoneTasks={this.props._onUndoneTasksFilter}
-                    />
+            <AddTask
+                currentValue={props._currentTask}
+                onNewTaskChangeHandler={props._onNewTaskChangeHandler}
+                onClickHandler={props._addTask}
+            />
+            <Search
+                filterTask={props._filterTask}
+                onSearchTaskChangeHandler={props._onSearchTaskChangeHandler}
+                allTasks={props._onAllTasksFilter}
+                doneTasks={props._onDoneTasksFilter}
+                undoneTasks={props._onUndoneTasksFilter}
+            />
 
-                    <TaskList
-                        tasks={this.props._tasks}
-                        filterTask={this.props._filterTask}
-                        completed={this.props._onIsCompletedTaskChangeHandler}
-                        onDeleteHandler={this.props._onDeleteTaskHandler}
-                        chosenFilter={this.props._filterMethod}
-                    />
-                </Paper>
-            </div>
-
-        )
-    }
-}
+            <TaskList
+                tasks={props._tasks}
+                filterTask={props._filterTask}
+                completed={props._onIsCompletedTaskChangeHandler}
+                onDeleteHandler={props._onDeleteTaskHandler}
+                chosenFilter={props._filterMethod}
+            />
+        </Paper>
+    </div>
+)
 
 const mapStateToProps = state => ({
     _tasks: state.todo.tasks,

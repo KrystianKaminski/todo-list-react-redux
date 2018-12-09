@@ -8,6 +8,10 @@ import Search from './Search'
 
 import { connect } from 'react-redux'
 
+import {
+    onNewTaskChangeHandler
+} from '../state/todo'
+
 const style = {
     paper: {
         margin: 30,
@@ -23,8 +27,6 @@ const style = {
 
 class Todo extends React.Component {
 
-
-    onNewTaskChangeHandler = e => this.setState({ currentTask: e.target.value })
 
     onSearchTaskChangeHandler = e => this.setState({ filterTask: e.target.value })
 
@@ -84,7 +86,7 @@ class Todo extends React.Component {
                 </h1>
                     <AddTask
                         currentValue={this.props._currentTask}
-                        onNewTaskChangeHandler={this.onNewTaskChangeHandler}
+                        onNewTaskChangeHandler={this.props._onNewTaskChangeHandler}
                         onClickHandler={this.addTask}
                     />
                     <Search
@@ -117,9 +119,10 @@ const mapStateToProps = state => ({
 })
 
 const dispatchToProps = dispatch => ({
-
+    _onNewTaskChangeHandler: e => dispatch(onNewTaskChangeHandler(e.target.value))
 })
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    dispatchToProps
 )(Todo)

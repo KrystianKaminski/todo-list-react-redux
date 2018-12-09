@@ -5,37 +5,23 @@ import Forms from './Forms'
 import { connect } from 'react-redux'
 
 import {
+    initAuthChangeListeningAsyncAction,
     emailHandler,
     passwordHandler,
     logInAsyncAction,
+    logInByGoogleAsyncAction,
+    logOutAsyncAction
 } from '../state/auth'
 
 class Auth extends React.Component {
-
-    state = {
-        email: '',
-        password: '',
-        isUserLoggedIn: false
-    }
-
-
-
     componentDidMount() {
         this.props._initAuthChangeListeningAsyncAction()
-    }
-
-    onLogInByGoogleClick = () => {
-        auth.signInWithPopup(googleProvider)
-    }
-
-    onLogOutClickHandler = () => {
-        auth.signOut()
     }
 
 
     render() {
         return (
-            this.state.isUserLoggedIn ?
+            this.props._isUserLoggedIn ?
                 <div>
                     <FloatingActionButton
                         style={{
@@ -46,7 +32,7 @@ class Auth extends React.Component {
                             color: 'white'
                         }}
                         secondary={true}
-                        onClick={this.onLogOutClickHandler}
+                        onClick={this.props._logOutAsyncAction}
                     >
                         X
                     </FloatingActionButton>
@@ -57,9 +43,9 @@ class Auth extends React.Component {
                     emailHandler={this.props._emailHandler}
                     passwordHandler={this.props._passwordHandler}
                     onLogIn={this.props._logInAsyncAction}
-                    onLogGoogle={this.onLogInByGoogleClick}
-                    emailValue={this.state.email}
-                    passwordValue={this.state.password}
+                    onLogGoogle={this.props._logInByGoogleAsyncAction}
+                    emailValue={this.props._email}
+                    passwordValue={this.props._password}
                 />
         )
     }
@@ -75,7 +61,9 @@ const dispatchToProps = dispatch => ({
     _initAuthChangeListeningAsyncAction: () => dispatch(initAuthChangeListeningAsyncAction()),
     _emailHandler: e => dispatch(emailHandler(e.target.value)),
     _passwordHandler: e => dispatch(passwordHandler(e.target.value)),
-    _logInAsyncAction: () => dispatch(logInAsyncAction())
+    _logInAsyncAction: () => dispatch(logInAsyncAction()),
+    _logInByGoogleAsyncAction: () => dispatch(logInByGoogleAsyncAction()),
+    _logOutAsyncAction: () => dispatch(logOutAsyncAction()),
 })
 
 

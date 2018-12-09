@@ -55,10 +55,21 @@ export const passwordHandler = value => ({
 })
 
 export const logInAsyncAction = () => (dispatch, getState) => {
+
+    const { auth: { email, password } } = getState()
+
     auth.signInWithEmailAndPassword(email, password)
         .catch(error => {
-            alert('Something is wrong! Check console for error details')
+            alert(error)
         })
+}
+
+export const logInByGoogleAsyncAction = () => (dispatch, getState) => {
+    auth.signInWithPopup(googleProvider)
+}
+
+export const logOutAsyncAction = () => (dispatch, getState) => {
+    auth.signOut()
 }
 
 export default (state = INITIAL_STATE, action) => {
